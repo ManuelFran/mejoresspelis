@@ -3,6 +3,7 @@ import MovieCard from "../components/MovieCard"
 
 function Home (){
     const [movies, setMovies] = useState([])
+    const [favorites, setFavorites] = useState([])
 
     useEffect(() =>{
         const options = {
@@ -19,11 +20,24 @@ function Home (){
         .catch(err => console.error(err));
     }, [])
 
+    useEffect(() => {
+        const storedFavorites = JSON.parse(localStorage.getItem('favorites'));
+        if (storedFavorites) 
+            setFavorites(storedFavorites);
+    }, [])
+
+    
+
     return <section>
-        <ul className="flex flex-wrap gap-6">
+        <ul className="flex justify-center items-center flex-wrap gap-6">
         {movies.length > 0 ? (
-            movies.map(movie=> <li id={movie.id}><MovieCard key={movie.id} movie={movie}/></li>)
-        ) : (<li><p>Cargando...</p></li>)
+            movies.slice(0,20).map(movie=>
+            <MovieCard 
+                key={movie.id} 
+                movie={movie} 
+                favorites={favorites} 
+                setFavorites={setFavorites} />)
+        ) : (<p>Cargando...</p>)
         }
         </ul>
     </section>

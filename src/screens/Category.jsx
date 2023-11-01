@@ -3,8 +3,9 @@ import MovieCard from "../components/MovieCard";
 import { useParams } from "react-router-dom";
 
 function Category (){
-    const [movies, setMovies] = useState([])
-    const { with_genres } = useParams()
+    const [movies, setMovies] = useState([]);
+    const [favorites, setFavorites] = useState([]);
+    const { with_genres } = useParams();
 
     useEffect(() =>{
         const options = {
@@ -19,15 +20,20 @@ function Category (){
         .then(response => response.json())
         .then(response => setMovies(response.results))
         .catch(err => console.error(err));
-    }, [with_genres])
+    }, [with_genres]);
+
+    useEffect(() => {
+        const storedFavorites = JSON.parse(localStorage.getItem('favorites'));
+        storedFavorites && setFavorites(storedFavorites);
+    }, []);
 
     return <section>
-        <ul id={with_genres} className="flex flex-wrap gap-6">
-        {movies.length > 0 ? (
-            movies.map(movie=> <li id={movie.id}><MovieCard key={movie.id} movie={movie}/></li>)
-        ) : (<p>Cargando...</p>)
-        }
-        </ul>
+    <ul className="flex justify-center items-center flex-wrap gap-6">
+    {movies.length > 0 ? (
+        movies.slice(0,9).map(movie=><MovieCard key={movie.id} movie={movie} favorites={favorites} setFavorites={setFavorites} />)
+    ) : (<p>Cargando...</p>)
+    }
+    </ul>
     </section>
 }
 

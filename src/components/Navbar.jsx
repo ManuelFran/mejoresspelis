@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import Results from "../screens/Results"
 
-function Navbar(){
+function Navbar(){  
+  const [input, setInput] = useState('');
+  const navigate = useNavigate();
+
+ const handleKeyUp = ((e) => {
+    if (e.key === 'Enter') {
+        navigate(`/results/${input}`);
+    }
+});
     return (<div className="navbar bg-base-100">
     <div className="flex-1 px-0">
-      <a className="btn btn-ghost normal-case text-xl"><Link to="/">Mejores Pelis</Link></a>
+      <span className="btn btn-ghost normal-case text-xl"><Link to="/">Mejores Pelis</Link></span>
     </div>
     <ul className="flex gap-5 px-8">
         <li><Link to="/">Home</Link></li>
@@ -13,7 +23,7 @@ function Navbar(){
     </ul>
     <div className="flex-none gap-1">
       <div className="form-control">
-        <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+        <input type="text" onChange={(e) => setInput(e.currentTarget.value)} onKeyUp={(e) => handleKeyUp(e)} placeholder="Search" className="input input-bordered w-24 md:w-auto" />
       </div>
     </div>
   </div>)
