@@ -1,13 +1,13 @@
 import  { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Home from '/screens/Home'
-import Category from '/screens/Category'
-import Favorites from '/screens/Favorites'
-import Results from '/screens/Results'
-import NotFound404 from '/screens/NotFound404'
-import Navbar from '/components/NavBar'
-import Footer from '/components/Footer'
-import Detail from '/screens/Detail'
+import Home from './screens/Home'
+import Category from './screens/Category'
+import Favorites from './screens/Favorites'
+import Results from './screens/Results'
+import NotFound404 from './screens/NotFound404'
+import Navbar from './components/NavBar'
+import Footer from './components/Footer'
+import Detail from './screens/Detail'
 
 function App() {
 
